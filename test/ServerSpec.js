@@ -443,6 +443,7 @@ describe('', function() {
         db.query('INSERT INTO users (username) VALUES (?)', username, function(error, results) {
           if (error) { return done(error); }
           var userId = results.insertId;
+          console.log(results.insertId, '***********');
 
           createSession(requestWithoutCookie, response, function() {
             var hash = requestWithoutCookie.session.hash;
@@ -480,7 +481,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Sessions and cookies', function() {
+  describe('Sessions and cookies', function() {
     var requestWithSession;
     var cookieJar;
 
