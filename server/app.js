@@ -7,6 +7,7 @@ const Auth = require('./middleware/auth');
 const models = require('./models/');
 const User = require('./models/user');
 const model = require('./models/model');
+const cookieParser = require('./middleware/cookieParser');
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(partials());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
-
+// app.use(cookieParser(req, res, next))
 
 
 app.get('/', 
