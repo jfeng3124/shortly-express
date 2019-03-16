@@ -83,7 +83,6 @@ app.post('/links',
 
 app.get('/signup', 
   (req, res) => {
-    console.log('&&&', req.body, '&&&');
     res.render('signup');
   });
 
@@ -92,25 +91,35 @@ app.get('/login',
     res.render('login');
   });
 
-app.post('/signup', (req, res, next) => {
-  //first check if username already exists in database, if it does not
-  //users.create a new user object with username and password
-  //if it does exist, redirect to login
-
+app.post('/signup', (req, res) => {
   var newUser = {username: req.body.username, password: req.body.password};
   User.get({username: req.body.username})
     .then((err) => {
       if (err) {
-        res.redirect('/login');
+        res.redirect('/signup');
       } else {
         User.create(newUser);
         res.redirect('/');
       }
     });
 });
+//first check if username already exists in database, if it does not
+//users.create a new user object with username and password
+//if it does exist, redirect to login
 
-app.post('/login', (req, res, next) => {
-  console.log(req.body);
+app.post('/login', (req, res) => {
+  User.get({username: req.body.username})
+    .then((data) => {
+      if (User.compare(req.body.password, data.password, data.salt)) {
+        res.redirect('/');
+      } else {
+        console.log('Wrong Password!');
+        res.redirect('/login');
+      } 
+    })
+    .catch(() => {
+      res.redirect('/login');
+    });
 }); 
 /************************************************************/
 // Handle the code parameter route last - if all other routes fail
