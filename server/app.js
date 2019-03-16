@@ -111,6 +111,7 @@ app.post('/login', (req, res) => {
   User.get({username: req.body.username})
     .then((data) => {
       if (User.compare(req.body.password, data.password, data.salt)) {
+        // recieve cookie
         res.redirect('/');
       } else {
         console.log('Wrong Password!');

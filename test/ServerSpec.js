@@ -347,12 +347,14 @@ describe('', function() {
         var response = httpMocks.createResponse();
 
         cookieParser(requestWithoutCookies, response, function() {
+          console.log(requestWithoutCookies.headers, '#####################');
           var cookies = requestWithoutCookies.cookies;
           expect(cookies).to.be.an('object');
           expect(cookies).to.eql({});
         });
 
         cookieParser(requestWithCookies, response, function() {
+          console.log(requestWithCookies);
           var cookies = requestWithCookies.cookies;
           expect(cookies).to.be.an('object');
           expect(cookies).to.eql({ shortlyid: '8a864482005bcc8b968f2b18f8f7ea490e577b20' });
